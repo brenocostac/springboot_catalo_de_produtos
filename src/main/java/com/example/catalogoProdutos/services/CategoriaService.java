@@ -25,9 +25,7 @@ public class CategoriaService {
 
     @Transactional
     public Optional<Categoria> findById(int id) {
-        if (id <= 0) {
-            return Optional.empty();
-        }
+
         return categoriaRepository.findById(id);
     }
 
