@@ -1,0 +1,31 @@
+package com.example.catalogoProdutos.domain;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+
+import java.util.Set;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@Table(name = "categorias")
+public class Categoria {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="categoria_id", nullable = false)
+    private Long id;
+
+    @Column(name = "categoria_nome")
+    private String nome;
+
+    @Column(name = "categoria_status")
+    private int status;
+
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private Set<Produto> produtos;
+
+}
