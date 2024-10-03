@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@Table(name="produtos")
+@Table(name="produto")
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class Produto {
     @Column(name="produto_status", nullable = false)
     private int status;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="categoria_id", nullable=false)
     private Categoria categoria;
 
@@ -28,7 +28,7 @@ public class Produto {
     @JoinColumn(name="empresa_id", nullable=false)
     private Empresa empresa;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name="estoque_id")
     private Estoque estoque;
 
