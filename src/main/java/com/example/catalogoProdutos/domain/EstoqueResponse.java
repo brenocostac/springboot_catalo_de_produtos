@@ -19,4 +19,5 @@ public class EstoqueResponse {
     private BigDecimal precoVenda;
     private Long produtoId;
     private int quantidade;
+    private String produtoNome;
 }

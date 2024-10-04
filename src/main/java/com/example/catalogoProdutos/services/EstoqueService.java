@@ -42,7 +42,8 @@ public class EstoqueService {
                             estoque.getId(),
                             estoque.getPrecoVenda(),
                             produtoId,
-                            estoque.getQuantidadeProduto()
+                            estoque.getQuantidadeProduto(),
+                            estoque.getProduto().getNome()
                     );
                 })
                 .collect(Collectors.toList());
@@ -68,7 +69,8 @@ public class EstoqueService {
                     estoque.getId(),
                     estoque.getPrecoVenda(),
                     produtoId,
-                    estoque.getQuantidadeProduto()
+                    estoque.getQuantidadeProduto(),
+                    estoque.getProduto().getNome()
             );
         });
     }
@@ -88,6 +90,7 @@ public class EstoqueService {
         existingEstoque.setPrecoVenda(estoque.getPrecoVenda());
         existingEstoque.setProduto(estoque.getProduto());
         existingEstoque.setQuantidadeProduto(estoque.getQuantidadeProduto());
+
 
         estoqueRepository.save(existingEstoque);
     }
