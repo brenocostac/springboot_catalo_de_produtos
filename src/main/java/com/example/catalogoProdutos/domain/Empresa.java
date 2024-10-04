@@ -23,10 +23,11 @@ public class Empresa {
 
     @Column(name = "empresa_nome", nullable = false)
     private String nome;
-    @JsonIgnore
+
     @Column(name = "empresa_status", nullable = false)
     private int status;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
     private Set<Produto> produtos;
 }

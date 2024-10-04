@@ -17,6 +17,6 @@ public class EstoqueResponse {
 
     private Long id;
     private BigDecimal precoVenda;
-    @JsonIgnore
-    private Produto produto;
+    private Long produtoId;
+    private int quantidade;
 }

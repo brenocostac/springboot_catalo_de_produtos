@@ -31,6 +31,8 @@ public class Estoque {
 
     @Column(name = "estoque_status")
     private int status;
+    @Column(name = "estoque_produto_qtd")
+    private int quantidadeProduto;
     @JsonIgnore
     @OneToOne(mappedBy = "estoque", cascade = CascadeType.ALL)
     private Produto produto;

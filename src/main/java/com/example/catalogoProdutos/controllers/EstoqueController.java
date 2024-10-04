@@ -53,6 +53,16 @@ public class EstoqueController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/atualizar_quantidade/{id}")
+    public ResponseEntity<Void> atualizarEstoque(@PathVariable int id, @RequestBody int quantidade) {
+        if (!estoqueService.existsById(id)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        estoqueService.atualizarEstoqueQuantidade(id, quantidade);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerEstoque(@PathVariable int id) {

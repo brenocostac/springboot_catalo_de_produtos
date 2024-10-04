@@ -30,11 +30,21 @@ public class EstoqueService {
 
 
         return estoques.stream()
-                .map(estoque -> new EstoqueResponse(
-                        estoque.getId(),
-                        estoque.getPrecoVenda(),
-                        estoque.getProduto()
-                ))
+                .map(estoque -> {
+                    Long produtoId = null;
+
+
+                    if (estoque.getProduto() != null) {
+                        produtoId = estoque.getProduto().getId();
+                    }
+
+                    return new EstoqueResponse(
+                            estoque.getId(),
+                            estoque.getPrecoVenda(),
+                            produtoId,
+                            estoque.getQuantidadeProduto()
+                    );
+                })
                 .collect(Collectors.toList());
     }
 
@@ -46,11 +56,21 @@ public class EstoqueService {
         Optional<Estoque> estoqueOptional = estoqueRepository.findById(id);
 
 
-        return estoqueOptional.map(estoque -> new EstoqueResponse(
-                estoque.getId(),
-                estoque.getPrecoVenda(),
-                estoque.getProduto()
-        ));
+        return estoqueOptional.map(estoque -> {
+            Long produtoId = null;
+
+
+            if (estoque.getProduto() != null) {
+                produtoId = estoque.getProduto().getId();
+            }
+
+            return new EstoqueResponse(
+                    estoque.getId(),
+                    estoque.getPrecoVenda(),
+                    produtoId,
+                    estoque.getQuantidadeProduto()
+            );
+        });
     }
 
 
@@ -67,6 +87,7 @@ public class EstoqueService {
         existingEstoque.setPrecoCompra(estoque.getPrecoCompra());
         existingEstoque.setPrecoVenda(estoque.getPrecoVenda());
         existingEstoque.setProduto(estoque.getProduto());
+        existingEstoque.setQuantidadeProduto(estoque.getQuantidadeProduto());
 
         estoqueRepository.save(existingEstoque);
     }
@@ -80,6 +101,20 @@ public class EstoqueService {
         existingEstoque.setStatus(-1);
 
         estoqueRepository.save(existingEstoque);
+    }
+
+    @Transactional
+    public void atualizarEstoqueQuantidade(int id, int quantidadeRemovida) {
+        Estoque existingEstoque = estoqueRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Estoque não encontrado"));
+
+        if (existingEstoque.getQuantidadeProduto() >= quantidadeRemovida) {
+            int novaQuantidade = existingEstoque.getQuantidadeProduto() - quantidadeRemovida;
+            existingEstoque.setQuantidadeProduto(novaQuantidade);
+            estoqueRepository.save(existingEstoque);
+        } else {
+            throw new IllegalArgumentException("Quantidade a ser removida é maior do que o disponível no estoque");
+        }
     }
 
     public boolean existsById(int id) {

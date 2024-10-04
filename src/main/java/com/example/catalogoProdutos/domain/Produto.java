@@ -20,13 +20,16 @@ public class Produto {
     @Column(name="produto_id", nullable = false)
     private Long id;
 
+    @Column (name = "produto_nome", nullable = false)
+    private String nome;
     @Column(name="produto_status", nullable = false)
     private int status;
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name="categoria_id", nullable=false)
     private Categoria categoria;
-    @JsonIgnore
+
+
     @ManyToOne
     @JoinColumn(name="empresa_id", nullable=false)
     private Empresa empresa;
