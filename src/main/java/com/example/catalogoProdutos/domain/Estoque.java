@@ -1,5 +1,6 @@
 package com.example.catalogoProdutos.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +29,9 @@ public class Estoque {
     @Column(name = "preco_venda", nullable = false)
     private BigDecimal precoVenda;
 
-
-    @OneToMany(mappedBy = "estoque", cascade = CascadeType.ALL)
-    private Set<Produto> produtos;
+    @Column(name = "estoque_status")
+    private int status;
+    @JsonIgnore
+    @OneToOne(mappedBy = "estoque", cascade = CascadeType.ALL)
+    private Produto produto;
 }

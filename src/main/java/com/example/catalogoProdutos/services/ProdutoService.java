@@ -1,5 +1,6 @@
 package com.example.catalogoProdutos.services;
 
+import com.example.catalogoProdutos.domain.Estoque;
 import com.example.catalogoProdutos.domain.Produto;
 import com.example.catalogoProdutos.repositories.ProdutoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,12 +21,14 @@ public class ProdutoService {
 
     @Transactional
     public List<Produto> listarTodos() {
-        return produtoRepository.findByStatusNot(-1);
+        return produtoRepository.findAll();
     }
 
     @Transactional
     public Optional<Produto> findById(int id) {
-
+        if (id <= 0) {
+            return Optional.empty();
+        }
         return produtoRepository.findById(id);
     }
 
@@ -42,17 +45,23 @@ public class ProdutoService {
         existingProduto.setStatus(produto.getStatus());
         existingProduto.setCategoria(produto.getCategoria());
         existingProduto.setEmpresa(produto.getEmpresa());
+
+
         existingProduto.setEstoque(produto.getEstoque());
 
         produtoRepository.save(existingProduto);
     }
 
+
+
     @Transactional
     public void removerProduto(int id) {
-        Produto existingProduto = produtoRepository.findById(id)
+        Produto existingProduto = produtoRepository.findById( id)
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
 
-        existingProduto.setStatus(-1); // Exclusão lógica
+
+        existingProduto.setStatus(-1);
+
         produtoRepository.save(existingProduto);
     }
 

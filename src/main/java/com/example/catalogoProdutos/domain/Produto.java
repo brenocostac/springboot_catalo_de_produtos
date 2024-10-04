@@ -1,5 +1,6 @@
 package com.example.catalogoProdutos.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,17 +22,18 @@ public class Produto {
 
     @Column(name="produto_status", nullable = false)
     private int status;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="categoria_id", nullable=false)
     private Categoria categoria;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="empresa_id", nullable=false)
     private Empresa empresa;
 
-    @ManyToOne
-    @JoinColumn(name="estoque_id")
+
+    @OneToOne
+    @JoinColumn(name = "estoque_id")
     private Estoque estoque;
 
 
