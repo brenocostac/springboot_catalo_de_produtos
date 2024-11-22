@@ -22,6 +22,7 @@ public class EstoqueController {
 
 
     @GetMapping
+    @CrossOrigin(origins = "*")
     public ResponseEntity<List<EstoqueResponse>> listarEstoques() {
         List<EstoqueResponse> estoques = estoqueService.listarTodos();
         return new ResponseEntity<>(estoques, HttpStatus.OK);
@@ -29,6 +30,7 @@ public class EstoqueController {
 
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<EstoqueResponse> obterEstoque(@PathVariable int id) {
         Optional<EstoqueResponse> estoque = estoqueService.findById(id);
         return estoque.map(e -> new ResponseEntity<>(e, HttpStatus.OK))
@@ -54,6 +56,7 @@ public class EstoqueController {
     }
 
     @PutMapping("/atualizar_quantidade/{id}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Void> atualizarEstoque(@PathVariable int id, @RequestBody int quantidade) {
         if (!estoqueService.existsById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
